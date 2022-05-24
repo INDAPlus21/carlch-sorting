@@ -6,6 +6,7 @@
 #define less(a,b) ((a)<(b))
 #define swap(a,b) do{char t=a; a=b; b=t;}while(0)
 
+
 void insert_sort(char *l,char *r) {
   for(char *px=l+1; px<=r; px++)
     if(less(*px,*l))
@@ -18,15 +19,26 @@ void insert_sort(char *l,char *r) {
       p-=1;
     }
     *(p+1)=h;
+    for(int i=0;i<10;i++) {
+      usleep(50000);
+      printf("\033[4;%dH%c ",1+(2*i),l[i]);
+      fflush(stdout);
+    }
   }
 }
 
 void select_sort(char *a,int len) {
   register int i,j;
   for(i=0;i<len;i++)
-    for(j=i+1;j<len;j++)
+    for(j=i+1;j<len;j++) {
       if(*(a+i)>*(a+j))
         swap(*(a+i),*(a+j));
+      for(int i=0;i<10;i++) {
+        usleep(50000);
+        printf("\033[7;%dH%c ",1+(2*i),a[i]);
+        fflush(stdout);
+      }
+    }
 
 }
 
@@ -45,6 +57,11 @@ void cocktail_sort(char *a,int len) {
         }
       if(flag)
         return;
+      for(int i=0;i<10;i++) {
+        usleep(50000);
+        printf("\033[10;%dH%c ",1+(2*i),a[i]);
+        fflush(stdout);
+      }
     }
   }while(1);
 }
@@ -66,18 +83,11 @@ int main() {
   }
   printf("\n\n-INSERTION-SORT----\n");
   insert_sort(a, a+10-1);
-  for(i=0;i<10;i++)
-    printf("%c ",a[i]);
-
   printf("\n\n-SELECTION-SORT----\n");
   select_sort(b,10);
-  for(i=0;i<10;i++)
-    printf("%c ",b[i]);
 
   printf("\n\n-COCKTAIL-SORT-----\n");
   cocktail_sort(c,10);
-  for(i=0;i<10;i++)
-    printf("%c ",c[i]);
 
   free(a);
   free(b);
